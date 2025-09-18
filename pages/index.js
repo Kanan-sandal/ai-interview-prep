@@ -16,7 +16,6 @@ export default function Home() {
   const [copiedIndex, setCopiedIndex] = useState(null);
   const [savedIndex, setSavedIndex] = useState(null);
   const [difficulty, setDifficulty] = useState("easy"); // adaptive difficulty
-  const [message, setMessage] = useState(null); // feedback message
 
   useEffect(() => {
     if (darkMode) document.documentElement.classList.add("dark");
@@ -78,11 +77,7 @@ export default function Home() {
 
       if (data.success) {
         setSavedIndex(index);
-        setMessage("✅ Question saved!");
-        setTimeout(() => {
-          setSavedIndex(null);
-          setMessage(null);
-        }, 2000);
+        setTimeout(() => setSavedIndex(null), 1500);
       } else {
         alert("❌ Save error: " + data.error);
       }
@@ -113,16 +108,16 @@ export default function Home() {
         </h1>
         <div className="flex items-center space-x-4">
           <a
-            href="/"
+            href="#"
             className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400"
           >
             Home
           </a>
           <a
-            href="/saved"
+            href="#questions"
             className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400"
           >
-            Saved
+            Questions
           </a>
           <button
             onClick={() => setDarkMode(!darkMode)}
@@ -145,7 +140,7 @@ export default function Home() {
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300">
             Adaptive difficulty:{" "}
-            <span className="px-2 py-1 rounded bg-indigo-100 dark:bg-indigo-700 text-indigo-700 dark:text-indigo-200 font-bold">
+            <span className="font-bold text-indigo-600 dark:text-indigo-400">
               {difficulty.toUpperCase()}
             </span>
           </p>
@@ -185,13 +180,6 @@ export default function Home() {
         {/* Loading Spinner */}
         {loading && (
           <div className="mt-8 animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
-        )}
-
-        {/* Feedback Message */}
-        {message && (
-          <div className="mt-4 text-green-600 dark:text-green-400 font-semibold">
-            {message}
-          </div>
         )}
 
         {/* Generated Questions */}
